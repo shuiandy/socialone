@@ -1,27 +1,26 @@
 import { useState } from "react";
-import { Sidebar, useProSidebar, Menu, MenuItem} from "react-pro-sidebar";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import MenuIcon from "@mui/icons-material/Menu";
-function AppSidebar () {
+import { Sidebar, useProSidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { BsInstagram, BsTwitter, BsFacebook } from "react-icons/bs";
+import { MdDashboard } from "react-icons/md";
+function AppSidebar() {
   const { collapseSidebar } = useProSidebar();
   return (
-    <div class="Sidebar">
+    <div style={{ display: "block", height: "100%" }}>
       <Sidebar>
         <Menu>
-          <MenuItem icon={<DashboardIcon />}> Unify Stream</MenuItem>
-          <MenuItem icon={<FacebookIcon />}> Facebook</MenuItem>
-          <MenuItem icon={<TwitterIcon />}> Twitter</MenuItem>
-          <MenuItem icon={<InstagramIcon />}> Instagram</MenuItem>
+          <MenuItem icon={<MdDashboard size={30} />}> Unify Stream</MenuItem>
+          <MenuItem icon={<BsFacebook size={30} color={"#087AEA"} />}>
+            Facebook
+          </MenuItem>
+          <MenuItem icon={<BsTwitter size={30} color={"#1D9BF0"} />}>
+            Twitter
+          </MenuItem>
+          <MenuItem icon={<BsInstagram size={30} />}> Instagram</MenuItem>
         </Menu>
       </Sidebar>
-      <main>
-        <button onClick={() => collapseSidebar()}><MenuIcon /></button>
-      </main>
+      <main></main>
     </div>
   );
-};
+}
 
 export default AppSidebar;

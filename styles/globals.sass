@@ -1,12 +1,12 @@
 html,
 body,
 .app,
-.content,
-#__next
+.content
   padding: 0
   margin: 0
-  height: 100%
+  height: 100vh
   width: 100%
+  display: block
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif
 
 .app
@@ -20,10 +20,9 @@ a
 *
   box-sizing: border-box
 
-// @media (prefers-color-scheme: dark)
-//   html
-//     color-scheme: dark
-
-//   body
-//     color: white
-//     background: black
+.sections
+  display: block
+  width: 30%
+  padding: 16px
+  height: 100vh
+  border-right: 1px solid gray

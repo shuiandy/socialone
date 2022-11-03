@@ -2,6 +2,7 @@ import {
   Navbar,
   Button,
   Dropdown,
+  Modal,
   Text,
   Avatar,
   Switch,
@@ -11,25 +12,23 @@ import { useContext, useState } from "react";
 import { BiMenu } from "react-icons/bi";
 import { useTheme as useNextTheme } from "next-themes";
 import { useProSidebar } from "react-pro-sidebar";
-import {GoLogoGithub} from 'react-icons/go'
+import { GoLogoGithub } from "react-icons/go";
+import { PreferenceModal } from "./PreferencesModal";
+import {HiSun, HiMoon} from "react-icons/hi2"
 const AppNavbar = () => {
   const collapseItems = ["Profile", "Log Out"];
   const { setTheme } = useNextTheme();
   const { isDark, type } = useTheme();
+  // const { isShowing, toggleModal } = usePreferenceModal();
   const { collapseSidebar } = useProSidebar();
+  const [visible, setModalVisible] = useState(false);
+  const closeHandler = () => {
+    setModalVisible(false);
+  };
   return (
-    <div
-      class='sidebar'
-      style={{
-        display: "flex",
-        width: "100%",
-        justifyContent: "space-between",
-        position: "top",
-        padding: "16px",
-      }}
-    >
-      <Navbar isBordered variant='sticky'>
-        <Navbar.Content>
+    <div>
+      <Navbar>
+        <Navbar.Content NavbarVariants='static'>
           <Navbar.Item placement='bottom-left'>
             <BiMenu size={30} onClick={() => collapseSidebar()} />
           </Navbar.Item>
@@ -43,6 +42,8 @@ const AppNavbar = () => {
           <Navbar.Item>
             <Switch
               checked={isDark}
+              iconOn={<HiMoon />}
+              iconOff={<HiSun />}
               onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
             />
           </Navbar.Item>
@@ -61,7 +62,12 @@ const AppNavbar = () => {
             <Dropdown.Menu
               aria-label='User menu actions'
               color='secondary'
-              onAction={(actionKey) => console.log({ actionKey })}
+              onAction={(actionKey) => {
+                if (actionKey === "settings") {
+                  setModalVisible(true);
+                }
+                console.log({ actionKey });
+              }}
             >
               <Dropdown.Item key='profile' css={{ height: "$18" }}>
                 <Text b color='interit' css={{ d: "flex" }}>
@@ -71,6 +77,11 @@ const AppNavbar = () => {
                   shuiandy@gmail.com
                 </Text>
               </Dropdown.Item>
+              <Dropdown.Item key='settings' withDivider>
+                <Text color='interit' css={{ d: "flex" }}>
+                  Settings
+                </Text>
+              </Dropdown.Item>
               <Dropdown.Item key='logout' withDivider color='error'>
                 Log Out
               </Dropdown.Item>
@@ -78,6 +89,19 @@ const AppNavbar = () => {
           </Dropdown>
         </Navbar.Content>
       </Navbar>
+      <Modal
+        closeButton
+        blur
+        aria-labelledby='modal-title'
+        open={visible}
+        onClose={closeHandler}
+      >
+        <Modal.Header>
+          <Text id='modal-title' size={18}>
+            Preferences
+          </Text>
+        </Modal.Header>
+      </Modal>
     </div>
   );
 };

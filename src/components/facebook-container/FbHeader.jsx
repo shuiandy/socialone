@@ -26,9 +26,6 @@ export default function FbHeader() {
               <Grid>
                 <BiRefresh size={25} />
               </Grid>
-              <Grid>
-                <BiSearch size={25} />
-              </Grid>
             </Grid.Container>
           </Row>
         </Card.Body>

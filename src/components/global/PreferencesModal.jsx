@@ -1,12 +1,38 @@
-import { useState, React } from "react";
-import { Modal, Input, Row, Checkbox, Button, Text } from "@nextui-org/react";
-
-export default function PreferencesModal() {
-  const [visible, setVisible] = useState(false);
-  const usePreferenceModal = () => setVisible(true);
+import { React } from "react";
+import { Modal, Row, Button, Text, Col, Grid } from "@nextui-org/react";
+import {
+  fbLoginStatus,
+  insLoginStatus,
+  twitterLoginStatus,
+  preferenceModal,
+} from "../../hooks/useRecoil";
+import { useRecoilState } from "recoil";
+import { BsTwitter, BsFacebook, BsInstagram } from "react-icons/bs";
+import { deleteCookie } from "cookies-next";
+export default function PreferencesModal(props) {
+  const [fbLogin, setFbLogin] = useRecoilState(fbLoginStatus);
+  const [insLogin, setInsLogin] = useRecoilState(insLoginStatus);
+  const [twitterLogin, setTwitterLogin] = useRecoilState(twitterLoginStatus);
+  const [visible, setVisible] = useRecoilState(preferenceModal);
   const closeHandler = () => {
     setVisible(false);
   };
+  const logoutFb = () => {
+    setFbLogin(false);
+    deleteCookie("fbId");
+    deleteCookie("fbAccessToken");
+  }
+    const logoutIns = () => {
+      setInsLogin(false);
+      deleteCookie("insUserId");
+      deleteCookie("insAccessToken");
+    };
+    const logoutTwitter = () => {
+      setTwitterLogin(false);
+      deleteCookie("twitterAccessTokenSecret");
+      deleteCookie("twitterAccessToken");
+      deleteCookie("twitterId");
+    };
   return (
     <Modal
       closeButton
@@ -20,6 +46,56 @@ export default function PreferencesModal() {
           Preferences
         </Text>
       </Modal.Header>
+      <Modal.Body>
+        {fbLogin && (
+          <Grid justify="space-between">
+            <Row>
+              <Col>
+                <BsFacebook size={25} />
+              </Col>
+              <Col>
+                <Text b>Logout from Facebook</Text>
+              </Col>
+              <Col>
+                <Button auto color='error' onClick={logoutFb}>
+                  Logout
+                </Button>
+              </Col>
+            </Row>
+          </Grid>
+        )}
+        {!fbLogin && <Text b>You have not logged in Facebook account</Text>}
+        {insLogin && (
+          <Grid>
+            <Row>
+              <Col>
+                <Text b>Logout from Instagram</Text>
+              </Col>
+              <Col>
+                <Button auto color='error' onClick={logoutIns}>
+                  Logout
+                </Button>
+              </Col>
+            </Row>
+          </Grid>
+        )}
+        {!insLogin && <Text b>You have not logged in Instagram account</Text>}
+        {twitterLogin && (
+          <Grid>
+            <Row>
+              <Col>
+                <Text b>Logout from Twitter</Text>
+              </Col>
+              <Col>
+                <Button auto color='error' onClick={logoutTwitter}>
+                  Logout
+                </Button>
+              </Col>
+            </Row>
+          </Grid>
+        )}
+        {!twitterLogin && <Text b>You have not logged in Twitter account</Text>}
+      </Modal.Body>
     </Modal>
   );
 }

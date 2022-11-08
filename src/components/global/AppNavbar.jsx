@@ -1,44 +1,40 @@
 import {
-  Navbar,
-  Button,
-  Dropdown,
-  Modal,
-  Text,
   Avatar,
+  Dropdown,
+  Navbar,
   Switch,
+  Text,
   useTheme,
 } from "@nextui-org/react";
-import { useContext, useState } from "react";
 import { BiMenu } from "react-icons/bi";
 import { useTheme as useNextTheme } from "next-themes";
 import { useProSidebar } from "react-pro-sidebar";
-import { GoLogoGithub } from "react-icons/go";
-import { PreferenceModal } from "./PreferencesModal";
-import {HiSun, HiMoon} from "react-icons/hi2"
+import { HiMoon, HiSun } from "react-icons/hi2";
+import { useSetRecoilState } from "recoil";
+import { preferenceModal } from "../../hooks/useRecoil";
+
 const AppNavbar = () => {
-  const collapseItems = ["Profile", "Log Out"];
   const { setTheme } = useNextTheme();
   const { isDark, type } = useTheme();
-  // const { isShowing, toggleModal } = usePreferenceModal();
   const { collapseSidebar } = useProSidebar();
-  const [visible, setModalVisible] = useState(false);
-  const closeHandler = () => {
-    setModalVisible(false);
-  };
+  const setModalVisible = useSetRecoilState(preferenceModal);
+
   return (
     <div>
-      <Navbar>
-        <Navbar.Content NavbarVariants='static'>
+      <Navbar variant='static' maxWidth='fluid'>
+        <Navbar.Content>
           <Navbar.Item placement='bottom-left'>
             <BiMenu size={30} onClick={() => collapseSidebar()} />
           </Navbar.Item>
         </Navbar.Content>
         <Navbar.Content>
           <Navbar.Brand>
-            <GoLogoGithub size={75} />
+            <Text size={35} css={{ fontFamily: "Oswald" }}>
+              SocialOne
+            </Text>
           </Navbar.Brand>
         </Navbar.Content>
-        <Navbar.Content css={{ "@xs": { w: "12%", js: "flex-end" } }}>
+        <Navbar.Content css={{ "@xs": { w: "150px", js: "flex-end" } }}>
           <Navbar.Item>
             <Switch
               checked={isDark}
@@ -89,19 +85,6 @@ const AppNavbar = () => {
           </Dropdown>
         </Navbar.Content>
       </Navbar>
-      <Modal
-        closeButton
-        blur
-        aria-labelledby='modal-title'
-        open={visible}
-        onClose={closeHandler}
-      >
-        <Modal.Header>
-          <Text id='modal-title' size={18}>
-            Preferences
-          </Text>
-        </Modal.Header>
-      </Modal>
     </div>
   );
 };

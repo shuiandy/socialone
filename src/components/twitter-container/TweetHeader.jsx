@@ -1,8 +1,10 @@
 import { Card, Grid, Text, Row } from "@nextui-org/react";
 import { BiRefresh, BiSearch } from "react-icons/bi";
 import { BsTwitter } from "react-icons/bs";
+import useApplicationData from "../../hooks/useApplicationData";
 
 export default function TweetHeader() {
+  const { fetchTwitterData } = useApplicationData();
   return (
     <Grid>
       <Card>
@@ -24,7 +26,7 @@ export default function TweetHeader() {
             </Grid.Container>
             <Grid.Container justify='flex-end' display='inline-flex'>
               <Grid>
-                <BiRefresh size={25} />
+                <BiRefresh size={25} onClick={fetchTwitterData} />
               </Grid>
               <Grid>
                 <BiSearch size={25} />

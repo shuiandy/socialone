@@ -29,7 +29,7 @@ export default function PreferencesModal(props) {
     };
     const logoutTwitter = () => {
       setTwitterLogin(false);
-      deleteCookie("twitterAccessTokenSecret");
+      deleteCookie("twitterAccessSecret");
       deleteCookie("twitterAccessToken");
       deleteCookie("twitterId");
     };

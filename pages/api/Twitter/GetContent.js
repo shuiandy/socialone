@@ -39,7 +39,6 @@ export default async function GetContent(req, res) {
     ],
   });
 
-  console.log(userInfo);
   res.status(200).send({
     tweets: homeTimeline.tweets,
     includes: homeTimeline.includes.result.includes,

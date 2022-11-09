@@ -81,14 +81,8 @@ export default function TweetCardItem(props) {
         </Grid.Container>
       </Card.Header>
       <Card.Body css={{ py: "$2" }}>
-        <Grid.Container>
-          <Grid>
             <Text>{props.text}</Text>
-          </Grid>
-        </Grid.Container>
-        <Grid.Container>
           <TweetImgs tweetImg={props.tweetImg} key={props.id} />
-        </Grid.Container>
       </Card.Body>
       <Card.Footer>
         <Grid.Container gap={2} justify='space-between'>

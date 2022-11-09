@@ -23,6 +23,14 @@ const twitterPanel = atom({
   key: "twitterPanel",
   default: "timeline",
 });
+const twitterUserTimeline = atom({
+  key: "userTimeline",
+  default: [],
+});
+const twitterSearchResult = atom({
+  key: "twitterSearchRes",
+  default: [],
+});
 export {
   fbLoginStatus,
   insLoginStatus,
@@ -30,4 +38,6 @@ export {
   modeState,
   preferenceModal,
   twitterPanel,
+  twitterUserTimeline,
+  twitterSearchResult,
 };

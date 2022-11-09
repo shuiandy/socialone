@@ -16,10 +16,5 @@ export default function reducer(state, action) {
         ...state,
         insPosts: action.insPosts,
       };
-    case "SET_TWITTER_USER_TIMELINE":
-      return {
-        ...state,
-        twitterUserTimeline: action.twitterUserTimeline,
-      };
   }
 }

@@ -7,8 +7,13 @@ import {
   getTwitterTimeline,
   getFbTimeline,
 } from "../helpers/getData";
-import { fbLoginStatus, insLoginStatus, twitterLoginStatus } from "./useRecoil";
-import { useRecoilState } from "recoil";
+import {
+  fbLoginStatus,
+  insLoginStatus,
+  twitterLoginStatus,
+  twitterUserTimeline,
+} from "./useRecoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(reducer, {
@@ -16,9 +21,8 @@ export default function useApplicationData() {
     facebookPosts: [],
     twitterPosts: [],
     twitterUserInfo: [],
-    twitterUserTimeline: [],
   });
-
+  const setTwitterUserTimeline = useSetRecoilState(twitterUserTimeline);
   const [fbLogin, setFbLogin] = useRecoilState(fbLoginStatus);
   const [insLogin, setInsLogin] = useRecoilState(insLoginStatus);
   const [twitterLogin, setTwitterLogin] = useRecoilState(twitterLoginStatus);
@@ -33,16 +37,14 @@ export default function useApplicationData() {
     });
   };
   const fetchTwitterUserTimeline = () => {
+    console.log("fetchUserTimeline");
     axios.get("/api/Twitter/GetUserContent").then((response) => {
+      console.log(response.data);
       const finalData = getTwitterTimeline(response.data);
-      dispatch({
-        type: "SET_TWITTER_USER_TIMELINE",
-        twitterUserTimeline: finalData.timeline,
-      });
+      setTwitterUserTimeline(finalData.userTimeline);
     });
   };
   const fetchInsData = () => {
-    console.log("I'm Here");
     axios.get("/api/Instagram/GetContent").then((response) => {
       const finalData = getInsTimeline(response.data);
       dispatch({

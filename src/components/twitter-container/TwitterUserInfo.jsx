@@ -2,8 +2,11 @@ import { Card, Grid, Image, Text, Row, Col } from "@nextui-org/react";
 import { ImLocation, ImCalendar } from "react-icons/im";
 import moment from "moment";
 import TweetCards from "./tweetCards";
+import { useRecoilValue } from "recoil";
+import { twitterUserTimeline } from "../../hooks/useRecoil";
 export default function TwitterUserInfo(props) {
   const userInfo = props.twitterUserInfo;
+  const userTimeline = useRecoilValue(twitterUserTimeline);
   const joinedTime = moment(userInfo.created_at).format("MMM DD YYYY");
   return (
     <Grid.Container>
@@ -46,7 +49,7 @@ export default function TwitterUserInfo(props) {
           </Grid.Container>
         </Card.Header>
       </Card>
-      <TweetCards tweets={props.twitterUserTimeline} />
+      <TweetCards tweets={userTimeline} />
     </Grid.Container>
   );
 }

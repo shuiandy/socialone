@@ -27,7 +27,7 @@ export default async function GetUserContent(req, res) {
     ],
   });
   res.status(200).send({
-    userTimeline: userTimeline.tweets,
-    userIncludes: userTimeline.includes.result.includes,
+    userTweets: userTimeline.tweets,
+    includes: userTimeline.includes.result.includes,
   });
 }

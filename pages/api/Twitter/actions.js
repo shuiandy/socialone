@@ -52,4 +52,22 @@ export default async function action(req, res) {
       return res.status(400).send(false);
     }
   }
+  if (method === "search") {
+    const searchResult = await client.v2.search(req.query.text, {
+      expansions: ["author_id", "attachments.media_keys"],
+      exclude: ["retweets", "replies"],
+      "user.fields": ["name", "profile_image_url"],
+      "media.fields": ["preview_image_url", "url"],
+      "tweet.fields": [
+        "created_at",
+        "attachments",
+        "entities",
+        "public_metrics",
+        "conversation_id",
+      ],
+    });
+    return res.status(200).send({
+      tweetSearchResult: searchResult,
+    });
+  }
 }

@@ -12,7 +12,7 @@ import TwitterUserInfo from "./twitter-container/TwitterUserInfo";
 
 function App() {
   const { state } = useApplicationData();
-  const { loginStatus } = useRecoilValue(twitterLoginStatus);
+  const loginStatus = useRecoilValue(twitterLoginStatus);
   const mode = useRecoilValue(modeState);
   return (
     <div className='app'>

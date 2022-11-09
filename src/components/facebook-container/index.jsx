@@ -3,15 +3,15 @@ import React from "react";
 import FbCards from "./FbCards";
 import FbHeader from "./FbHeader";
 import FacebookLogin from "react-facebook-login";
-import { setCookies } from "cookies-next";
+import { setCookie } from "cookies-next";
 import { fbLoginStatus } from "../../hooks/useRecoil";
 import { useRecoilState } from "recoil";
 
 export default function FbSection(props) {
   const [loginStatus, setFbLogin] = useRecoilState(fbLoginStatus);
   const responseFb = (response) => {
-    setCookies("fbAccessToken", response.accessToken);
-    setCookies("fbId", response.id);
+    setCookie("fbAccessToken", response.accessToken);
+    setCookie("fbId", response.id);
     setFbLogin(true);
   };
   return (
@@ -46,7 +46,6 @@ export default function FbSection(props) {
             <Row justify='center'>
               <FacebookLogin
                 appId={process.env.NEXT_PUBLIC_FACEBOOK_APP_ID}
-                autoLoad={false}
                 callback={responseFb}
                 cssClass='facebook-Button'
                 size='small'

@@ -65,10 +65,17 @@ export default function TweetCardItem(props) {
         <Grid.Container alignContent='center' css={{ pl: "$6" }}>
           <Grid xs={12}>
             <Row>
-            <Text h5 css={{ lineHeight: "$xs" }}>
-              {props.name}
+              <Text h5 css={{ lineHeight: "$xs" }}>
+                {props.name}
               </Text>
-              <Text h6 css={{ lineHeight: "xs", paddingLeft: "10px", justifyContent: "flex-end" }}>
+              <Text
+                h6
+                css={{
+                  lineHeight: "xs",
+                  paddingLeft: "10px",
+                  justifyContent: "flex-end",
+                }}
+              >
                 @{props.username}
               </Text>
             </Row>
@@ -80,9 +87,9 @@ export default function TweetCardItem(props) {
           </Grid>
         </Grid.Container>
       </Card.Header>
-      <Card.Body css={{ py: "$2" }}>
-            <Text>{props.text}</Text>
-          <TweetImgs tweetImg={props.tweetImg} key={props.id} />
+      <Card.Body>
+        <Text>{props.text}</Text>
+        <TweetImgs tweetImg={props.tweetImg} key={props.id} />
       </Card.Body>
       <Card.Footer>
         <Grid.Container gap={2} justify='space-between'>

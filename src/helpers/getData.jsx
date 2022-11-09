@@ -4,7 +4,6 @@ import axios from "axios";
 function getTwitterTimeline(tweetList) {
   let result = {};
   let timeline = [];
-  console.log(tweetList);
   const tweets = tweetList.tweets ? tweetList.tweets : tweetList.userTweets;
   const includes = tweetList.includes;
   if (tweets) {

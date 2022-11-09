@@ -37,9 +37,7 @@ export default function useApplicationData() {
     });
   };
   const fetchTwitterUserTimeline = () => {
-    console.log("fetchUserTimeline");
     axios.get("/api/Twitter/GetUserContent").then((response) => {
-      console.log(response.data);
       const finalData = getTwitterTimeline(response.data);
       setTwitterUserTimeline(finalData.userTimeline);
     });

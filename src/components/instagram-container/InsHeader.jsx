@@ -26,7 +26,17 @@ export default function InsHeader() {
               </Grid>
             </Grid.Container>
             <Grid.Container justify='flex-end'>
-              <Grid>
+              <Grid
+                css={{
+                  "&:hover": {
+                    opacity: 0.8,
+                    borderRadius: "40px",
+                  },
+                  "&:active": {
+                    opacity: 0.2,
+                  },
+                }}
+              >
                 <BiRefresh size={25} />
               </Grid>
             </Grid.Container>

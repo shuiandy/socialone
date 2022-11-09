@@ -45,7 +45,7 @@ export default function FbSection(props) {
           >
             <Row justify='center'>
               <FacebookLogin
-                appId='2243650315964178'
+                appId={process.env.NEXT_PUBLIC_FACEBOOK_APP_ID}
                 autoLoad={false}
                 callback={responseFb}
                 cssClass='facebook-Button'

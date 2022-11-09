@@ -1,6 +1,7 @@
 import { Card, Grid, Text, Input, Button, Image } from "@nextui-org/react";
 
-export default function NewTweet() {
+export default function NewTweet(props) {
+  const userInfo = props.twitterUserInfo;
   const submitTweet = (event) => {
     console.log(event);
   };
@@ -11,10 +12,10 @@ export default function NewTweet() {
           <Grid.Container direction='row'>
             <Grid>
               <Image
-                alt='nextui-logo'
-                src='https://avatars.githubusercontent.com/u/86160567?s=200&v=4'
-                width='34px'
-                height='34px'
+                alt='twitter-profile-image'
+                src={userInfo.profile_image_url}
+                width='50px'
+                height='50px'
               />
             </Grid>
             <Grid>
@@ -27,7 +28,7 @@ export default function NewTweet() {
         <form onSubmit={(e) => e.preventDefault()}>
           <Card.Body>
             <Input
-              size="lg"
+              size='lg'
               aria-label='new-tweet'
               placeholder="What's happening?"
               name='new-tweet'

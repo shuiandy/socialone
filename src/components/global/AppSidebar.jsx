@@ -2,11 +2,20 @@ import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
 import { BsInstagram, BsTwitter, BsFacebook } from "react-icons/bs";
 import { MdDashboard } from "react-icons/md";
 import { Image, Grid, Text } from "@nextui-org/react";
-import { useRecoilState } from "recoil";
-import { modeState } from "../../hooks/useRecoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { modeState, twitterLoginStatus } from "../../hooks/useRecoil";
+import useApplicationData from "../../hooks/useApplicationData";
 function AppSidebar() {
   const { collapsed } = useProSidebar();
   const [mode, setMode] = useRecoilState(modeState);
+  const twitterLogin = useRecoilValue(twitterLoginStatus);
+  const { fetchTwitterUserTimeline } = useApplicationData();
+  const getTwitterInfo = () => {
+    if (twitterLogin) {
+      fetchTwitterUserTimeline();
+    }
+    setMode("twitter");
+  };
   return (
     <div style={{ display: "block", height: "100%" }}>
       <Sidebar style={{ height: "100%" }}>
@@ -56,7 +65,7 @@ function AppSidebar() {
           </MenuItem>
           <MenuItem
             active={mode === "twitter"}
-            onClick={() => setMode("twitter")}
+            onClick={() => getTwitterInfo()}
             icon={<BsTwitter size={30} color={"#1D9BF0"} />}
           >
             Twitter

@@ -15,6 +15,8 @@ export default function useApplicationData() {
     insPosts: [],
     facebookPosts: [],
     twitterPosts: [],
+    twitterUserInfo: [],
+    twitterUserTimeline: [],
   });
 
   const [fbLogin, setFbLogin] = useRecoilState(fbLoginStatus);
@@ -25,11 +27,22 @@ export default function useApplicationData() {
       const finalData = getTwitterTimeline(response.data);
       dispatch({
         type: "SET_TWITTER_DATA",
-        twitterPosts: finalData,
+        twitterPosts: finalData.timeline,
+        twitterUserInfo: finalData.userInfo,
+      });
+    });
+  };
+  const fetchTwitterUserTimeline = () => {
+    axios.get("/api/Twitter/GetUserContent").then((response) => {
+      const finalData = getTwitterTimeline(response.data);
+      dispatch({
+        type: "SET_TWITTER_USER_TIMELINE",
+        twitterUserTimeline: finalData.timeline,
       });
     });
   };
   const fetchInsData = () => {
+    console.log("I'm Here");
     axios.get("/api/Instagram/GetContent").then((response) => {
       const finalData = getInsTimeline(response.data);
       dispatch({
@@ -84,5 +97,6 @@ export default function useApplicationData() {
     fetchFbData,
     fetchInsData,
     fetchTwitterData,
+    fetchTwitterUserTimeline,
   };
 }

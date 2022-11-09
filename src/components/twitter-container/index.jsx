@@ -4,11 +4,11 @@ import NewTweet from "./NewTweet";
 import TweetCards from "./tweetCards";
 import TweetHeader from "./TweetHeader";
 import { BsTwitter } from "react-icons/bs";
-import { twitterLoginStatus } from "../../hooks/useRecoil";
-import { useRecoilValue } from "recoil";
+import { twitterLoginStatus, twitterPanel } from "../../hooks/useRecoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 export default function TwitterSection(props) {
   const loginStatus = useRecoilValue(twitterLoginStatus);
-  const twitterData = props.twitterData;
+  const [currentPanel, setPanel] = useRecoilState(twitterPanel);
   return (
     <Container display='block' gap={0}>
       {!loginStatus && (
@@ -52,11 +52,11 @@ export default function TwitterSection(props) {
           </Card.Footer>
         </Card>
       )}
-      {loginStatus && (
+      {loginStatus && currentPanel === "timeline" && (
         <Grid.Container direction='column'>
           <TweetHeader />
-          <NewTweet />
-          <TweetCards tweets={twitterData} />
+          <NewTweet twitterUserInfo={props.twitterUserInfo} />
+          <TweetCards tweets={props.twitterData} />
         </Grid.Container>
       )}
     </Container>

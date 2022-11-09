@@ -22,6 +22,7 @@
     "react-infinite-scroller": "^1.2.6",
     "react-instagram-oauth": "^0.0.3",
     "react-pro-sidebar": "^1.0.0-alpha.7",
+    "react-reveal": "^1.2.2",
     "recoil": "^0.7.6",
     "sass": "^1.55.0",
     "twitter-api-v2": "^1.12.9"

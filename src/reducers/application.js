@@ -4,6 +4,7 @@ export default function reducer(state, action) {
       return {
         ...state,
         twitterPosts: action.twitterPosts,
+        twitterUserInfo: action.twitterUserInfo,
       };
     case "SET_FB_DATA":
       return {
@@ -14,6 +15,11 @@ export default function reducer(state, action) {
       return {
         ...state,
         insPosts: action.insPosts,
+      };
+    case "SET_TWITTER_USER_TIMELINE":
+      return {
+        ...state,
+        twitterUserTimeline: action.twitterUserTimeline,
       };
   }
 }

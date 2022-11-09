@@ -1,7 +1,9 @@
 import { getCookie } from "cookies-next";
 import axios from "axios";
+import { twitterLoginStatus } from "../hooks/useRecoil";
 
 function getTwitterTimeline(tweetList) {
+  let result = {};
   let timeline = [];
   const tweets = tweetList.tweets;
   const includes = tweetList.includes;
@@ -32,14 +34,19 @@ function getTwitterTimeline(tweetList) {
             reply_count: tweet.public_metrics.reply_count,
             like_count: tweet.public_metrics.like_count,
             retweet_count: tweet.public_metrics.retweet_count,
-            timestamp: tweet.created_at
+            timestamp: tweet.created_at,
           };
           timeline.push(tweetData);
         }
       });
     });
   }
-  return timeline;
+  if (tweetList.userInfo) {
+    result = {timeline: timeline, userInfo: tweetList.userInfo};
+  } else {
+    result = { userTimeline: timeline };
+  }
+  return result;
 }
 
 function getInsTimeline(insData) {

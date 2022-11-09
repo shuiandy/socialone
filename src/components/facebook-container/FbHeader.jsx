@@ -23,7 +23,17 @@ export default function FbHeader() {
               </Grid>
             </Grid.Container>
             <Grid.Container justify='flex-end' display='inline-flex'>
-              <Grid>
+              <Grid
+                css={{
+                  "&:hover": {
+                    opacity: 0.8,
+                    borderRadius: "40px",
+                  },
+                  "&:active": {
+                    opacity: 0.2,
+                  },
+                }}
+              >
                 <BiRefresh size={25} />
               </Grid>
             </Grid.Container>

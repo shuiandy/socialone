@@ -1,21 +1,29 @@
 import { getCookie } from "cookies-next";
 import axios from "axios";
-import { twitterLoginStatus } from "../hooks/useRecoil";
 
 function getTwitterTimeline(tweetList) {
   let result = {};
   let timeline = [];
-  const tweets = tweetList.tweets;
+  console.log(tweetList);
+  const tweets = tweetList.tweets ? tweetList.tweets : tweetList.userTweets;
   const includes = tweetList.includes;
   if (tweets) {
+    let count = 0;
     tweets.map((tweet) => {
       let media_url = [];
       if (tweet.entities && tweet.entities.urls) {
         tweet.entities.urls.map((url) => {
-          if (url.images) {
-            for (let i = 0; i < url.images.length; i += 1) {
-              if (i / 2 === 0) {
-                media_url.push(url.images[i].url);
+          if (tweetList.userTweets) {
+            if (includes.media[count].media_key === url.media_key) {
+              media_url.push(includes.media[count].url);
+              count += 1;
+            }
+          } else {
+            if (url.images) {
+              for (let i = 0; i < url.images.length; i += 1) {
+                if (i / 2 === 0) {
+                  media_url.push(url.images[i].url);
+                }
               }
             }
           }
@@ -42,7 +50,7 @@ function getTwitterTimeline(tweetList) {
     });
   }
   if (tweetList.userInfo) {
-    result = {timeline: timeline, userInfo: tweetList.userInfo};
+    result = { timeline: timeline, userInfo: tweetList.userInfo };
   } else {
     result = { userTimeline: timeline };
   }

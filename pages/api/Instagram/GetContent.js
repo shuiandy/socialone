@@ -5,9 +5,8 @@ export default async function GetContent(req, res) {
   if (!accessToken) {
     res.status(400).send("err");
   }
-  const userId = getCookie("insUserId", { req, res });
   const data = await axios.get(
-    `https://graph.instagram.com/v15.0/${userId}/media?fields=caption,media_type,media_url,timestamp,children,permalink,username&access_token=${accessToken}`
+    `https://graph.instagram.com/me/media?fields=caption,media_type,media_url,timestamp,children,permalink,username&access_token=${accessToken}`
   );
   res.status(200).send(data.data);
 }

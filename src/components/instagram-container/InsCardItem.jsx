@@ -1,7 +1,8 @@
-import { Card, Grid, Image, Link, Popover, Text } from "@nextui-org/react";
+import { Card, Grid, Image, Link, Popover, Text, Row } from "@nextui-org/react";
 import { BiHeart } from "react-icons/bi";
 import { BsInstagram } from "react-icons/bs";
 import { FaRetweet } from "react-icons/fa";
+import ReactPlayer from "react-player";
 import { MdChatBubbleOutline } from "react-icons/md";
 import moment from "moment";
 import InsShowAlbum from "./InsShowAlbum";
@@ -32,17 +33,34 @@ export default function InsCardItem(props) {
       <Card.Divider />
       <Card.Body>
         <Text>{props.text}</Text>
-        {props.media === "IMAGE" && <Image src={props.insImg} alt="ins-img" />}
+        {props.media === "IMAGE" && <Image src={props.insImg} alt='ins-img' />}
         {props.media === "CAROUSEL_ALBUM" && (
           <InsShowAlbum insImg={props.insImg} />
         )}
-        <Text>
-          <Link href={props.link}>Open in Instagram</Link>
-        </Text>
+        {props.media === "VIDEO" && (
+          <Grid>
+            <ReactPlayer
+              width="100%"
+              controls
+              muted
+              playing
+              loop
+              url={props.insImg}
+            />
+          </Grid>
+        )}
+        <Row>
+          <Text h6>
+            <Link href={props.link} target='_blank'>
+              Open in Instagram
+            </Link>{" "}
+            to likes and post comments.
+          </Text>
+        </Row>
       </Card.Body>
       <Card.Divider />
       <Card.Footer>
-        <Grid.Container gap={2} justify="space-between">
+        <Grid.Container gap={2} justify='space-between'>
           <Popover>
             <Popover.Trigger>
               <Grid
@@ -54,7 +72,7 @@ export default function InsCardItem(props) {
                   },
                 }}
               >
-                <MdChatBubbleOutline size={25} as="Button" />
+                <MdChatBubbleOutline size={25} as='Button' />
               </Grid>
             </Popover.Trigger>
             <Popover.Content>
@@ -80,7 +98,7 @@ export default function InsCardItem(props) {
                   },
                 }}
               >
-                <FaRetweet size={25} as="Button" />
+                <FaRetweet size={25} as='Button' />
               </Grid>
             </Popover.Trigger>
             <Popover.Content>
@@ -106,7 +124,7 @@ export default function InsCardItem(props) {
                   },
                 }}
               >
-                <BiHeart size={25} as="Button" />
+                <BiHeart size={25} as='Button' />
               </Grid>
             </Popover.Trigger>
             <Popover.Content>

@@ -1,4 +1,13 @@
-import { Card, Grid, Text, Image, Row, Modal, Input, Button } from "@nextui-org/react";
+import {
+  Card,
+  Grid,
+  Text,
+  Image,
+  Row,
+  Modal,
+  Input,
+  Button,
+} from "@nextui-org/react";
 import { BiHeart } from "react-icons/bi";
 import { FaRetweet } from "react-icons/fa";
 import { MdChatBubbleOutline } from "react-icons/md";
@@ -6,18 +15,23 @@ import axios from "axios";
 import TweetImgs from "./TweetImgs";
 import { useState } from "react";
 import moment from "moment";
-import useApplicationData from "../../hooks/useApplicationData";
 export default function TweetCardItem(props) {
-  const { replyTweet } = useApplicationData();
   const [rtState, setRtState] = useState(false);
+  const [replyState, setReplyState] = useState(false);
   const [likeState, setLikeState] = useState(false);
   const [visible, setVisible] = useState(false);
   const [input, setInput] = useState("");
   const handler = () => setVisible(true);
   const profileImg = props.profileImg.replace("_normal", "_bigger");
-    const setReplyTweet = (tweet) => {
-      replyTweet(tweet);
-    };
+  const setReplyTweet = (tweet) => {
+    const setReply = axios.get(
+      `/api/Twitter/actions?method=reply&id=${props.id}&tweet=${tweet}`
+    );
+    if (setReply) {
+      setReplyState(true);
+      setVisible(false);
+    }
+  };
   function likeTweet() {
     const likeAction = axios.get(
       `/api/Twitter/actions?method=like&id=${props.id}`
@@ -119,7 +133,7 @@ export default function TweetCardItem(props) {
                   <MdChatBubbleOutline size={25} />
                 </Grid>
                 <Grid>
-                  {props.replyCount > 0 && <Text> {props.replyCount}</Text>}
+                  {props.replyCount > 0 && <Text> {replyState ? props.replyCount + 1 : props.replyCount}</Text>}
                 </Grid>
               </Grid.Container>
             </Row>

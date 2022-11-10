@@ -46,7 +46,7 @@ function App() {
           )}
           {mode === "facebook" && (
             <Grid.Container justify='center' css={{ paddingTop: "20px" }}>
-              <Grid>
+              <Grid css={{ width: "50%" }} justify='center'>
                 <FbSection fbPosts={state.facebookPosts} />
               </Grid>
             </Grid.Container>
@@ -77,7 +77,7 @@ function App() {
           )}
           {mode === "instagram" && (
             <Grid.Container justify='center' css={{ paddingTop: "20px" }}>
-              <Grid>
+              <Grid css={{ width: "50%" }} justify='center'>
                 <InsSection insPosts={state.insPosts} />
               </Grid>
             </Grid.Container>

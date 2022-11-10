@@ -4,6 +4,7 @@ export default function InsShowAlbum(props) {
   const images = props.insImg;
   const albumLen = images.length;
   const [currentImage, setCurrentImage] = useState(0);
+  console.log(props.insImg);
   return (
     <Grid.Container direction='column' gap={2}>
       <Grid xs={12}>

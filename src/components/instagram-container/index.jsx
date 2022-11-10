@@ -6,14 +6,13 @@ import { setCookie } from "cookies-next";
 import { insLoginStatus, loadingStateIns } from "../../hooks/useRecoil";
 import { useRecoilState, useRecoilValue } from "recoil";
 import LoadingState from "../LoadingState";
-import ReactPlayer from "react-player/lazy";
 export default function InsSection(props) {
   const [loginStatus, setInsLogin] = useRecoilState(insLoginStatus);
   const isLoading = useRecoilValue(loadingStateIns);
   const authHandler = (err, data) => {
-    setInsLogin(true);
     setCookie("insAccessToken", data.access_token);
     setCookie("insUserId", data.user_id);
+    setInsLogin(true);
   };
   const clientId = process.env.NEXT_PUBLIC_INSTAGRAM_CLIENT_ID;
   const appSecret = process.env.NEXT_PUBLIC_INSTAGRAM_CLIENT_SECRET;
@@ -61,7 +60,7 @@ export default function InsSection(props) {
       {loginStatus && !isLoading && (
         <Grid.Container direction='column'>
           <InsHeader />
-          <InsCards insPosts={props.insPosts} loginStatus={props.loginStatus} />
+          <InsCards insPosts={props.insPosts} />
         </Grid.Container>
       )}
     </Container>

@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+
 const fbLoginStatus = atom({
   key: "fbLoginStatus",
   default: false,
@@ -27,6 +28,7 @@ const twitterUserTimeline = atom({
   key: "userTimeline",
   default: [],
 });
+
 const twitterSearchResult = atom({
   key: "twitterSearchRes",
   default: [],

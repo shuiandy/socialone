@@ -60,7 +60,6 @@ function getInsTimeline(insData) {
   let timeline = [];
   const accessToken = getCookie("insAccessToken");
   const posts = insData.data;
-  console.log(posts);
   posts.map((post) => {
     let postData = {
       media_type: post.media_type,

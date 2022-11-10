@@ -1,22 +1,22 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import reducer from "../reducers/application";
 import {
+  getFbTimeline,
   getInsTimeline,
   getTwitterTimeline,
-  getFbTimeline,
 } from "../helpers/getData";
 import {
   fbLoginStatus,
   insLoginStatus,
-  twitterLoginStatus,
-  twitterUserTimeline,
-  twitterSearchResult,
-  twitterPanel,
-  loadingStateTwitter,
   loadingStateFb,
   loadingStateIns,
+  loadingStateTwitter,
+  twitterLoginStatus,
+  twitterPanel,
+  twitterSearchResult,
+  twitterUserTimeline,
 } from "./useRecoil";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
@@ -29,13 +29,14 @@ export default function useApplicationData() {
   });
   const setTwitterUserTimeline = useSetRecoilState(twitterUserTimeline);
   const setTwitterSearchResult = useSetRecoilState(twitterSearchResult);
-  const [currentPanel, setPanel] = useRecoilState(twitterPanel);
+  const setPanel = useSetRecoilState(twitterPanel);
   const [fbLogin, setFbLogin] = useRecoilState(fbLoginStatus);
   const [insLogin, setInsLogin] = useRecoilState(insLoginStatus);
   const [twitterLogin, setTwitterLogin] = useRecoilState(twitterLoginStatus);
   const setTwitterLoadingState = useSetRecoilState(loadingStateTwitter);
   const setFbLoadingState = useSetRecoilState(loadingStateFb);
   const setInsLoadingState = useSetRecoilState(loadingStateIns);
+
   const fetchTwitterSearchResult = (searchString) => {
     setTwitterLoadingState(true);
     console.log("fetchTwitter");
@@ -48,32 +49,13 @@ export default function useApplicationData() {
         setPanel("searchResult");
       });
   };
-  const reloadTweetList = () => {
-    setTwitterLoadingState(true);
-    console.log("here");
-    axios.get("/api/Twitter/GetContent").then((response) => {
-      const finalData = getTwitterTimeline(response.data);
-      dispatch({
-        type: "SET_TWITTER_DATA",
-        twitterPosts: finalData.timeline,
-        twitterUserInfo: finalData.userInfo,
-      });
-    });
-    setTwitterLoadingState(false);
-  };
   const submitNewTweet = (tweet) => {
-    setTwitterLoadingState(true);
+    // setTwitterLoadingState(true);
     axios.get(`/api/Twitter/actions?method=newtweet&tweet=${tweet}`);
-    reloadTweetList();
-    fetchTwitterUserTimeline();
   };
+
   const replyTweet = (tweet) => {
-    setTwitterLoadingState(true);
-    axios
-      .get(`/api/Twitter/actions?method=reply&tweet=${tweet}`)
-      .then(() => {});
-    reloadTweetList();
-    fetchTwitterUserTimeline();
+    axios.get(`/api/Twitter/actions?method=reply&tweet=${tweet}`);
   };
   const fetchTwitterUserTimeline = () => {
     setTwitterLoadingState(true);
@@ -83,13 +65,14 @@ export default function useApplicationData() {
     });
     setTwitterLoadingState(false);
   };
+
   useEffect(() => {
     const twitterLoginCookie = getCookie("twitterAccessToken");
-    console.log("useTwitterEffect");
     if (twitterLoginCookie) {
       setTwitterLogin(true);
       setTwitterLoadingState(true);
       axios.get("/api/Twitter/GetContent").then((response) => {
+        console.log("useTwitterEffect");
         const finalData = getTwitterTimeline(response.data);
         dispatch({
           type: "SET_TWITTER_DATA",
@@ -99,31 +82,35 @@ export default function useApplicationData() {
       });
       setTwitterLoadingState(false);
     }
-  }, [setTwitterLoadingState, setTwitterLogin]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     const fbLoginCookie = getCookie("fbAccessToken");
     if (fbLoginCookie || fbLogin) {
       setFbLogin(true);
-      setFbLoadingState(true);
       axios.get("/api/Facebook/GetContent").then((response) => {
-        console.log("fbLog")
+        setFbLoadingState(true);
         const finalData = getFbTimeline(response.data.data);
+        console.log("FBFB");
         dispatch({
           type: "SET_FB_DATA",
           facebookPosts: finalData,
         });
+        setFbLoadingState(false);
       });
-      setFbLoadingState(false);
     }
-  }, [fbLogin, setFbLoadingState, setFbLogin]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fbLogin]);
   useEffect(() => {
     const insLoginCookie = getCookie("insAccessToken");
-    if (insLogin || insLoginCookie) {
+    if (insLoginCookie) {
       setInsLogin(true);
-      setInsLoadingState(true);
 
+      setInsLoadingState(true);
       axios.get("/api/Instagram/GetContent").then((response) => {
         const finalData = getInsTimeline(response.data);
+        console.log("InsIns");
         dispatch({
           type: "SET_INS_DATA",
           insPosts: finalData,
@@ -131,7 +118,8 @@ export default function useApplicationData() {
       });
       setInsLoadingState(false);
     }
-  }, [insLogin, setInsLoadingState, setInsLogin]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [insLogin]);
 
   return {
     state,

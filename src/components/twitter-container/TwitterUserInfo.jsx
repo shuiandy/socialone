@@ -1,10 +1,11 @@
-import { Card, Grid, Image, Text, Row, Col, Button } from "@nextui-org/react";
-import { ImLocation, ImCalendar } from "react-icons/im";
+import { Card, Grid, Image, Row, Text } from "@nextui-org/react";
+import { ImCalendar, ImLocation } from "react-icons/im";
 import moment from "moment";
 import TweetCards from "./tweetCards";
 import { useRecoilValue } from "recoil";
 import { BsTwitter } from "react-icons/bs";
 import { twitterUserTimeline } from "../../hooks/useRecoil";
+
 export default function TwitterUserInfo(props) {
   const userInfo = props.twitterUserInfo;
   const userTimeline = useRecoilValue(twitterUserTimeline);
@@ -23,11 +24,11 @@ export default function TwitterUserInfo(props) {
               p: "$6",
             }}
           >
-            <Row gap={0} warp='nowarp' justify='space-between' align='center'>
+            <Row gap={0} warp="nowarp" justify="space-between" align="center">
               <Grid.Container>
                 <BsTwitter size={25} />
               </Grid.Container>
-              <Grid.Container justify='center'>
+              <Grid.Container justify="center">
                 <Grid>
                   <Text h4 size={20} css={{ m: 0 }}>
                     My Profile
@@ -35,8 +36,8 @@ export default function TwitterUserInfo(props) {
                 </Grid>
               </Grid.Container>
               <Grid.Container
-                justify='flex-end'
-                display='inline-flex'
+                justify="flex-end"
+                display="inline-flex"
               ></Grid.Container>
             </Row>
           </Card.Body>
@@ -44,24 +45,24 @@ export default function TwitterUserInfo(props) {
       </Grid>
       <Card>
         <Card.Header>
-          <Grid.Container justify='center'>
+          <Grid.Container justify="center">
             <Grid>
               <Image
-                alt='twitter-user-image'
+                alt="twitter-user-image"
                 autoResize
-                width='180px'
+                width="180px"
                 src={userNormalProfilePhoto}
                 css={{ borderRadius: "50%" }}
               />
-              <Row align='center' justify='center' css={{ paddingTop: "15px" }}>
+              <Row align="center" justify="center" css={{ paddingTop: "15px" }}>
                 <Text h2 b>
                   {userInfo.name}
                 </Text>
               </Row>
-              <Row align='center' justify='center'>
+              <Row align="center" justify="center">
                 <Text h3>@{userInfo.username}</Text>
               </Row>
-              <Row align='center' css={{ width: "100%" }}>
+              <Row align="center" css={{ width: "100%" }}>
                 <Grid.Container>
                   <Grid>
                     <ImLocation size={20} />
@@ -78,7 +79,7 @@ export default function TwitterUserInfo(props) {
                 </Grid.Container>
               </Row>
               <Row css={{ width: "100%" }}>
-                <Grid.Container justify='center'>
+                <Grid.Container justify="center">
                   <Grid css={{ paddingRight: "5px" }}>
                     <Text h5>{userInfo.public_metrics.following_count}</Text>
                   </Grid>
@@ -86,7 +87,7 @@ export default function TwitterUserInfo(props) {
                     <Text h5>Following</Text>
                   </Grid>
                   <Grid css={{ paddingLeft: "10px" }}>
-                    <Row align='center'>
+                    <Row align="center">
                       <Grid css={{ paddingRight: "5px" }}>
                         <Text h5>
                           {userInfo.public_metrics.followers_count}

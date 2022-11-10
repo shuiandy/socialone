@@ -10,7 +10,7 @@ import {
   twitterPanel,
   twitterSearchResult,
 } from "../../hooks/useRecoil";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue} from "recoil";
 import LoadingState from "../LoadingState";
 export default function TwitterSection(props) {
   const loginStatus = useRecoilValue(twitterLoginStatus);

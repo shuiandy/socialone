@@ -1,5 +1,6 @@
 import { getCookie } from "cookies-next";
-import { TwitterApi, TwitterV2IncludesHelper } from "twitter-api-v2";
+import { ETwitterStreamEvent, TwitterApi } from "twitter-api-v2";
+
 export default async function GetContent(req, res) {
   const accessToken = getCookie("twitterAccessToken", { req, res });
   if (!accessToken) {
@@ -7,7 +8,9 @@ export default async function GetContent(req, res) {
   }
   const client = new TwitterApi(accessToken);
   const userId = await client.v2.me();
+ 
   const homeTimeline = await client.v2.homeTimeline({
+    max_results: 30,
     expansions: ["author_id", "attachments.media_keys"],
     exclude: ["retweets", "replies"],
     "user.fields": ["name", "profile_image_url"],

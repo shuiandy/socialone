@@ -3,11 +3,13 @@ import InsCards from "./InsCards";
 import InsHeader from "./InsHeader";
 import InstagramLogin from "react-instagram-oauth";
 import { setCookie } from "cookies-next";
-import { insLoginStatus } from "../../hooks/useRecoil";
-import { useRecoilState } from "recoil";
-
+import { insLoginStatus, loadingStateIns } from "../../hooks/useRecoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import LoadingState from "../LoadingState";
+import ReactPlayer from "react-player/lazy";
 export default function InsSection(props) {
   const [loginStatus, setInsLogin] = useRecoilState(insLoginStatus);
+  const isLoading = useRecoilValue(loadingStateIns);
   const authHandler = (err, data) => {
     setInsLogin(true);
     setCookie("insAccessToken", data.access_token);
@@ -17,6 +19,7 @@ export default function InsSection(props) {
   const appSecret = process.env.NEXT_PUBLIC_INSTAGRAM_CLIENT_SECRET;
   return (
     <Container display='block' gap={0}>
+      {isLoading && <LoadingState />}
       {!loginStatus && (
         <Card css={{ w: "100%", h: "400px" }}>
           <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
@@ -43,18 +46,19 @@ export default function InsSection(props) {
               zIndex: 1,
             }}
           >
-            <Row justify="center">
+            <Row justify='center'>
               <InstagramLogin
                 authCallback={authHandler}
                 appId={clientId}
                 appSecret={appSecret}
+                scopes={"user_media,user_profile"}
                 redirectUri='https://localhost:3001/'
               />
             </Row>
           </Card.Footer>
         </Card>
       )}
-      {loginStatus && (
+      {loginStatus && !isLoading && (
         <Grid.Container direction='column'>
           <InsHeader />
           <InsCards insPosts={props.insPosts} loginStatus={props.loginStatus} />

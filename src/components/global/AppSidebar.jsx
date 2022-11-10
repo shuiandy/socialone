@@ -2,16 +2,18 @@ import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
 import { BsInstagram, BsTwitter, BsFacebook } from "react-icons/bs";
 import { MdDashboard } from "react-icons/md";
 import { Image, Grid, Text } from "@nextui-org/react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { modeState, twitterLoginStatus } from "../../hooks/useRecoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { modeState, twitterLoginStatus, twitterPanel } from "../../hooks/useRecoil";
 import useApplicationData from "../../hooks/useApplicationData";
 function AppSidebar() {
   const { collapsed } = useProSidebar();
   const [mode, setMode] = useRecoilState(modeState);
   const twitterLogin = useRecoilValue(twitterLoginStatus);
   const { fetchTwitterUserTimeline } = useApplicationData();
+  const setTwitterPanel = useSetRecoilState(twitterPanel);
   const getTwitterInfo = () => {
     if (twitterLogin) {
+      setTwitterPanel("timeline");
       fetchTwitterUserTimeline();
     }
     setMode("twitter");

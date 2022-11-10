@@ -4,11 +4,13 @@ import FbCards from "./FbCards";
 import FbHeader from "./FbHeader";
 import FacebookLogin from "react-facebook-login";
 import { setCookie } from "cookies-next";
-import { fbLoginStatus } from "../../hooks/useRecoil";
-import { useRecoilState } from "recoil";
+import { fbLoginStatus, loadingStateFb } from "../../hooks/useRecoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import LoadingState from "../LoadingState";
 
 export default function FbSection(props) {
   const [loginStatus, setFbLogin] = useRecoilState(fbLoginStatus);
+  const isLoading = useRecoilValue(loadingStateFb);
   const responseFb = (response) => {
     setCookie("fbAccessToken", response.accessToken);
     setCookie("fbId", response.id);
@@ -16,6 +18,7 @@ export default function FbSection(props) {
   };
   return (
     <Container display='block' gap={0}>
+      {isLoading && <LoadingState />}
       {!loginStatus && (
         <Card css={{ w: "100%", h: "400px" }}>
           <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
@@ -55,10 +58,10 @@ export default function FbSection(props) {
           </Card.Footer>
         </Card>
       )}
-      {loginStatus && (
+      {loginStatus && !isLoading && (
         <Grid.Container direction='column'>
           <FbHeader />
-          <FbCards fbPosts={props.fbPosts} loginStatus={props.loginStatus} />
+          <FbCards fbPosts={props.fbPosts} loginStatus={loginStatus} />
         </Grid.Container>
       )}
     </Container>

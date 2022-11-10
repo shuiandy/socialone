@@ -23,8 +23,9 @@ function App() {
           css={{
             margin: 0,
             padding: 0,
-            overflowY: "scroll",
-            maxHeight: "100vh",
+            overflowY: "auto",
+            maxHeight: "93.5vh",
+            width: "100%",
           }}
         >
           {mode === "unify" && (

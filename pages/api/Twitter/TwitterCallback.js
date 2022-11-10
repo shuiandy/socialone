@@ -1,29 +1,41 @@
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { TwitterApi } from "twitter-api-v2";
 export default function TwitterCallback(req, res) {
-  const { oauth_token, oauth_verifier } = req.query;
-  const oauth_token_secret = getCookie("oauth_token_secret", { req, res });
-  if (!oauth_token || !oauth_verifier || !oauth_token_secret) {
+
+  const { state, code } = req.query;
+  const codeVerifier = getCookie("codeVerifier", { req, res });
+  const sessionState = getCookie("state", { req, res });
+
+  if (!codeVerifier || !state || !sessionState || !code) {
     return res.status(400).send("You denied the app or your session expired!");
   }
+  if (state !== sessionState) {
+    return res.status(400).send("Stored tokens didn't match!");
+  }
   const client = new TwitterApi({
-    appKey: process.env.NEXT_PUBLIC_TWITTER_API_KEY,
-    appSecret: process.env.NEXT_PUBLIC_TWITTER_API_SECRET,
-    accessToken: oauth_token,
-    accessSecret: oauth_token_secret,
+    clientId: process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID,
+    clientSecret: process.env.NEXT_PUBLIC_TWITTER_CLIENT_SECRET,
   });
 
   client
-    .login(oauth_verifier)
-    .then(({ userId, client: loggedClient, accessToken, accessSecret }) => {
-      // loggedClient is an authenticated client in behalf of some user
-      // Store accessToken & accessSecret somewhere
-      setCookie("twitterId", userId, { req, res });
-      setCookie("twitterAccessToken", accessToken, { req, res });
-      setCookie("twitterAccessSecret", accessSecret, { req, res });
-      deleteCookie("oauth_token", { req, res });
-      deleteCookie("oauth_token_secret", { req, res });
+    .loginWithOAuth2({
+      code,
+      codeVerifier,
+      redirectUri: "https://localhost:3001/api/Twitter/TwitterCallback",
     })
+    .then(
+      async ({
+        client: loggedClient,
+        accessToken,
+        refreshToken,
+        expiresIn,
+      }) => {
+        setCookie("twitterAccessToken", accessToken, { req, res });
+        deleteCookie("state", { req, res });
+        deleteCookie("codeVerifier", { req, res });
+      }
+    )
+
     .then(() => {
       res.redirect("/");
     });

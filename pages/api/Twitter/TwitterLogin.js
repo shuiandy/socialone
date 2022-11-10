@@ -4,15 +4,27 @@ async function TwitterLogin(req, res) {
   const appURL = process.env.NEXT_PUBLIC_APPURL;
   // Create a partial client for auth links
   const client = new TwitterApi({
-    appKey: process.env.NEXT_PUBLIC_TWITTER_API_KEY,
-    appSecret: process.env.NEXT_PUBLIC_TWITTER_API_SECRET,
+    clientId: process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID,
+    clientSecret: process.env.NEXT_PUBLIC_TWITTER_CLIENT_SECRET,
   });
-  const authLink = await client.generateAuthLink(
-    `${appURL}/api/Twitter/TwitterCallback`
+  const authLink = await client.generateOAuth2AuthLink(
+    `${appURL}/api/Twitter/TwitterCallback`,
+    {
+      scope: [
+        "tweet.read",
+        "users.read",
+        "like.write",
+        "like.read",
+        "tweet.read",
+        "tweet.write",
+        "users.read",
+        "offline.access",
+      ],
+    }
   );
 
-  setCookie("oauth_token", authLink.oauth_token, { req, res });
-  setCookie("oauth_token_secret", authLink.oauth_token_secret, { req, res });
+  setCookie("state", authLink.state, { req, res });
+  setCookie("codeVerifier", authLink.codeVerifier, { req, res });
   res.redirect(authLink.url);
 }
 export default TwitterLogin;

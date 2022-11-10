@@ -2,17 +2,11 @@ import { getCookie } from "cookies-next";
 import { TwitterApi, TwitterV2IncludesHelper } from "twitter-api-v2";
 export default async function GetContent(req, res) {
   const accessToken = getCookie("twitterAccessToken", { req, res });
-  const accessSecret = getCookie("twitterAccessSecret", { req, res });
-  const userId = getCookie("twitterId", { req, res });
   if (!accessToken) {
     res.status(400).send("err");
   }
-  const client = new TwitterApi({
-    accessToken: accessToken,
-    accessSecret: accessSecret,
-    appKey: process.env.NEXT_PUBLIC_TWITTER_API_KEY,
-    appSecret: process.env.NEXT_PUBLIC_TWITTER_API_SECRET,
-  });
+  const client = new TwitterApi(accessToken);
+  const userId = await client.v2.me();
   const homeTimeline = await client.v2.homeTimeline({
     expansions: ["author_id", "attachments.media_keys"],
     exclude: ["retweets", "replies"],
@@ -26,7 +20,7 @@ export default async function GetContent(req, res) {
       "conversation_id",
     ],
   });
-  const userInfo = await client.v2.user(userId, {
+  const userInfo = await client.v2.user(userId.data.id, {
     "user.fields": [
       "entities",
       "id",

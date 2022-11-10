@@ -4,13 +4,22 @@ import NewTweet from "./NewTweet";
 import TweetCards from "./tweetCards";
 import TweetHeader from "./TweetHeader";
 import { BsTwitter } from "react-icons/bs";
-import { twitterLoginStatus, twitterPanel } from "../../hooks/useRecoil";
+import {
+  twitterLoginStatus,
+  loadingStateTwitter,
+  twitterPanel,
+  twitterSearchResult,
+} from "../../hooks/useRecoil";
 import { useRecoilValue, useRecoilState } from "recoil";
+import LoadingState from "../LoadingState";
 export default function TwitterSection(props) {
   const loginStatus = useRecoilValue(twitterLoginStatus);
-  const [currentPanel, setPanel] = useRecoilState(twitterPanel);
+  const currentPanel= useRecoilValue(twitterPanel);
+  const isLoading = useRecoilValue(loadingStateTwitter);
+  const twitterSearch = useRecoilValue(twitterSearchResult);
   return (
     <Container display='block' gap={0}>
+      {isLoading && <LoadingState />}
       {!loginStatus && (
         <Card css={{ w: "100%", h: "400px" }}>
           <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
@@ -52,11 +61,17 @@ export default function TwitterSection(props) {
           </Card.Footer>
         </Card>
       )}
-      {loginStatus && currentPanel === "timeline" && (
+      {loginStatus && currentPanel === "timeline" && !isLoading && (
         <Grid.Container direction='column'>
           <TweetHeader />
           <NewTweet twitterUserInfo={props.twitterUserInfo} />
           <TweetCards tweets={props.twitterData} />
+        </Grid.Container>
+      )}
+      {loginStatus && currentPanel === "searchResult" && !isLoading && (
+        <Grid.Container direction='column'>
+          <TweetHeader />
+          <TweetCards tweets={twitterSearch.userTimeline} />
         </Grid.Container>
       )}
     </Container>

@@ -1,9 +1,12 @@
 import { Card, Grid, Text, Input, Button, Image } from "@nextui-org/react";
-
+import { useState } from "react";
+import useApplicationData from "../../hooks/useApplicationData";
 export default function NewTweet(props) {
   const userInfo = props.twitterUserInfo;
-  const submitTweet = (event) => {
-    console.log(event);
+  const { submitNewTweet } = useApplicationData();
+  const [input, setInput] = useState("");
+  const submitTweet = (tweet) => {
+    submitNewTweet(tweet);
   };
   return (
     <Grid css={{ paddingBottom: "15px" }}>
@@ -16,6 +19,7 @@ export default function NewTweet(props) {
                 src={userInfo.profile_image_url}
                 width='50px'
                 height='50px'
+                css={{ borderRadius: "50%" }}
               />
             </Grid>
             <Grid>
@@ -25,22 +29,22 @@ export default function NewTweet(props) {
             </Grid>
           </Grid.Container>
         </Card.Header>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <Card.Body>
-            <Input
-              size='lg'
-              aria-label='new-tweet'
-              placeholder="What's happening?"
-              name='new-tweet'
-              css={{ width: "100%" }}
-            />
-          </Card.Body>
-          <Card.Footer css={{ justifyContent: "flex-end" }}>
-            <Button auto type='submit' onChange={(event) => submitTweet(event)}>
-              Tweet
-            </Button>
-          </Card.Footer>
-        </form>
+        <Card.Body>
+          <Input
+            size='lg'
+            aria-label='new-tweet'
+            placeholder="What's happening?"
+            name='new-tweet'
+            css={{ width: "100%" }}
+            value={input}
+            onInput={(e) => setInput(e.target.value)}
+          />
+        </Card.Body>
+        <Card.Footer css={{ justifyContent: "flex-end" }}>
+          <Button auto type='submit' onPress={() => submitTweet(input)}>
+            Tweet
+          </Button>
+        </Card.Footer>
       </Card>
     </Grid>
   );

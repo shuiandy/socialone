@@ -1,4 +1,4 @@
-import { Card, Grid, Text, Image, Row, Modal } from "@nextui-org/react";
+import { Card, Grid, Text, Image, Row, Modal, Input, Button } from "@nextui-org/react";
 import { BiHeart } from "react-icons/bi";
 import { FaRetweet } from "react-icons/fa";
 import { MdChatBubbleOutline } from "react-icons/md";
@@ -6,11 +6,18 @@ import axios from "axios";
 import TweetImgs from "./TweetImgs";
 import { useState } from "react";
 import moment from "moment";
+import useApplicationData from "../../hooks/useApplicationData";
 export default function TweetCardItem(props) {
+  const { replyTweet } = useApplicationData();
   const [rtState, setRtState] = useState(false);
   const [likeState, setLikeState] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [input, setInput] = useState("");
   const handler = () => setVisible(true);
+  const profileImg = props.profileImg.replace("_normal", "_bigger");
+    const setReplyTweet = (tweet) => {
+      replyTweet(tweet);
+    };
   function likeTweet() {
     const likeAction = axios.get(
       `/api/Twitter/actions?method=like&id=${props.id}`
@@ -56,12 +63,14 @@ export default function TweetCardItem(props) {
       css={{ p: "$6", mw: "100%", marginTop: "15px" }}
     >
       <Card.Header justify='center'>
-        <Image
-          alt='profile-image'
-          src={props.profileImg}
-          width='40px'
-          height='40px'
-        />
+        <Grid>
+          <Image
+            alt='profile-image'
+            src={profileImg}
+            height='40px'
+            css={{ borderRadius: "50%" }}
+          />
+        </Grid>
         <Grid.Container alignContent='center' css={{ pl: "$6" }}>
           <Grid xs={12}>
             <Row>
@@ -172,9 +181,23 @@ export default function TweetCardItem(props) {
       <Modal closeButton open={visible} onClose={closeHandler}>
         <Modal.Header>
           <Text id='modal-title' size={18}>
-            Tweet Detail
+            Reply this tweet
           </Text>
         </Modal.Header>
+        <Input
+          size='lg'
+          aria-label='reply-tweet'
+          placeholder='Say something...'
+          name='reply-tweet'
+          css={{ width: "100%" }}
+          value={input}
+          onInput={(e) => setInput(e.target.value)}
+        />
+        <Modal.Footer css={{ justifyContent: "flex-end" }}>
+          <Button auto type='submit' onPress={() => setReplyTweet(input)}>
+            Tweet
+          </Button>
+        </Modal.Footer>
       </Modal>
     </Card>
   );

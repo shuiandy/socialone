@@ -2,7 +2,7 @@ import { Grid } from "@nextui-org/react";
 import TweetCardItem from "./TweetCardItem";
 
 export default function TweetCards(props) {
-  const tweet = props.tweets;
+  const tweet = props.tweets ? props.tweets : props.userTimeline;
   const result = tweet.map((item) => {
     return (
       <TweetCardItem
@@ -17,6 +17,7 @@ export default function TweetCards(props) {
         text={item.text}
         name={item.name}
         tweetImg={item.tweetImg}
+        timestamp={item.timestamp}
       />
     );
   });

@@ -60,6 +60,7 @@ function getInsTimeline(insData) {
   let timeline = [];
   const accessToken = getCookie("insAccessToken");
   const posts = insData.data;
+  console.log(posts);
   posts.map((post) => {
     let postData = {
       media_type: post.media_type,
@@ -86,6 +87,8 @@ function getInsTimeline(insData) {
         });
       });
       postData["insImg"] = insImgList;
+    } else if (post.media_type === "VIDEO") {
+      postData["insImg"] = post.media_url;
     }
     timeline.push(postData);
   });

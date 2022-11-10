@@ -31,6 +31,18 @@ const twitterSearchResult = atom({
   key: "twitterSearchRes",
   default: [],
 });
+const loadingStateTwitter = atom({
+  key: "loadingTwitter",
+  default: false,
+});
+const loadingStateFb = atom({
+  key: "loadingFb",
+  default: false,
+});
+const loadingStateIns = atom({
+  key: "loadingIns",
+  default: false,
+});
 export {
   fbLoginStatus,
   insLoginStatus,
@@ -40,4 +52,7 @@ export {
   twitterPanel,
   twitterUserTimeline,
   twitterSearchResult,
+  loadingStateTwitter,
+  loadingStateFb,
+  loadingStateIns,
 };

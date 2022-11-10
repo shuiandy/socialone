@@ -7,6 +7,9 @@ export default function TweetContextModal() {
       aria-labelledby="modal-title"
       open={visible}
       onClose={closeHandler}>
+      <Modal.Header>
+        
+      </Modal.Header>
     </Modal>
   );
 }

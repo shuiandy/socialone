@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import reducer from "../reducers/application";

@@ -29,6 +29,7 @@ export default function TweetCardItem(props) {
     );
     if (setReply) {
       setReplyState(true);
+      setInput("");
       setVisible(false);
     }
   };
@@ -133,7 +134,7 @@ export default function TweetCardItem(props) {
                   <MdChatBubbleOutline size={25} />
                 </Grid>
                 <Grid>
-                  {props.replyCount > 0 && <Text> {replyState ? props.replyCount + 1 : props.replyCount}</Text>}
+                  <Text> {replyState ? props.replyCount + 1 : props.replyCount}</Text>
                 </Grid>
               </Grid.Container>
             </Row>

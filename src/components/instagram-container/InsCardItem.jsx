@@ -43,7 +43,6 @@ export default function InsCardItem(props) {
               width="100%"
               controls
               muted
-              playing
               loop
               url={props.insImg}
             />

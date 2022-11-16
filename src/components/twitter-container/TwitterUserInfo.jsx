@@ -1,7 +1,7 @@
 import { Card, Grid, Image, Row, Text } from "@nextui-org/react";
 import { ImCalendar, ImLocation } from "react-icons/im";
 import moment from "moment";
-import TweetCards from "./tweetCards";
+import TweetCards from "./TweetCards";
 import { useRecoilValue } from "recoil";
 import { BsTwitter } from "react-icons/bs";
 import { twitterUserTimeline } from "../../hooks/useRecoil";

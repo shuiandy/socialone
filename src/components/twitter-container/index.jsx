@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Grid, Button, Text, Card } from "@nextui-org/react";
 import NewTweet from "./NewTweet";
-import TweetCards from "./tweetCards";
+import TweetCards from "./TweetCards";
 import TweetHeader from "./TweetHeader";
 import { BsTwitter } from "react-icons/bs";
 import {

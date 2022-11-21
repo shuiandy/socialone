@@ -89,7 +89,7 @@ export default function TweetCardItem(props) {
         <Grid.Container alignContent='center' css={{ pl: "$6" }}>
           <Grid xs={12}>
             <Row>
-              <Text h5 css={{ lineHeight: "$xs" }}>
+              <Text h5 css={{ lineHeight: "$xs", alignItems:"center" }}>
                 {props.name}
               </Text>
               <Text
@@ -98,6 +98,7 @@ export default function TweetCardItem(props) {
                   lineHeight: "xs",
                   paddingLeft: "10px",
                   justifyContent: "flex-end",
+                  alignItems:"center"
                 }}
               >
                 @{props.username}

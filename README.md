@@ -46,11 +46,11 @@ SocialOne is a SPA(Single Page Application) that allows user to view and manage 
 
 ### Dark Mode
 
-![Dark-mode.png](doc%2FDark-mode.png)
+![dark-mode-new.png](doc%2Fdark-mode-new.png)
 
 ### Unify Stream
 
-![unify-stream.png](doc%2Funify-stream.png)
+![unify-stream-new.png](doc%2Funify-stream-new.png)
 
 ### Twitter page
 

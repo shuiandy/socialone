@@ -95,7 +95,7 @@ SocialOne is a SPA(Single Page Application) that allows user to view and manage 
 
 2. Due to the policy of Meta API, you also need to deploy the project with HTTPS(if you deploy the project to the
    server) in order to get the authorization key.
-   If you plan to run the project locally, you can use local-ssl-proxy to generate a self-signed certificate.
+   If you plan to run the project locally, you can use **local-ssl-proxy** to generate a self-signed certificate.
 3. Install the dependencies
 
 ```bash

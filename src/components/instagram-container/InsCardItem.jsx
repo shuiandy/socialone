@@ -33,33 +33,27 @@ export default function InsCardItem(props) {
       <Card.Divider />
       <Card.Body>
         <Text>{props.text}</Text>
-        {props.media === "IMAGE" && <Image src={props.insImg} alt='ins-img' />}
+        {props.media === "IMAGE" && <Image src={props.insImg} alt="ins-img" />}
         {props.media === "CAROUSEL_ALBUM" && (
           <InsShowAlbum insImg={props.insImg} />
         )}
         {props.media === "VIDEO" && (
           <Grid>
-            <ReactPlayer
-              width="100%"
-              controls
-              muted
-              loop
-              url={props.insImg}
-            />
+            <ReactPlayer width="100%" controls muted loop url={props.insImg} />
           </Grid>
         )}
         <Row>
           <Text h6>
-            <Link href={props.link} target='_blank'>
+            <Link href={props.link} target="_blank">
               Open in Instagram
             </Link>{" "}
-            to likes and post comments.
+            to like and post comments.
           </Text>
         </Row>
       </Card.Body>
       <Card.Divider />
       <Card.Footer>
-        <Grid.Container gap={2} justify='space-between'>
+        <Grid.Container gap={2} justify="space-between">
           <Popover>
             <Popover.Trigger>
               <Grid
@@ -71,7 +65,7 @@ export default function InsCardItem(props) {
                   },
                 }}
               >
-                <MdChatBubbleOutline size={25} as='Button' />
+                <MdChatBubbleOutline size={25} as="Button" />
               </Grid>
             </Popover.Trigger>
             <Popover.Content>
@@ -97,7 +91,7 @@ export default function InsCardItem(props) {
                   },
                 }}
               >
-                <FaRetweet size={25} as='Button' />
+                <FaRetweet size={25} as="Button" />
               </Grid>
             </Popover.Trigger>
             <Popover.Content>
@@ -123,7 +117,7 @@ export default function InsCardItem(props) {
                   },
                 }}
               >
-                <BiHeart size={25} as='Button' />
+                <BiHeart size={25} as="Button" />
               </Grid>
             </Popover.Trigger>
             <Popover.Content>

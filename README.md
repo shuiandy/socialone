@@ -33,6 +33,27 @@ SocialOne is a SPA(Single Page Application) that allows user to view and manage 
 - Video playback
 - Pagination for an Facebook album
 
+## Screenshots
+
+### Main UI
+![main-UI.png](doc%2Fmain-UI.png)
+
+### Dark Mode
+![Dark-mode.png](doc%2FDark-mode.png)
+
+### Unify Stream
+![unify-stream.png](doc%2Funify-stream.png)
+
+### Twitter page
+![twitter-page.png](doc%2Ftwitter-page.png)
+
+### Instagram page
+![ins-page.png](doc%2Fins-page.png)
+
+### Facebook page
+![fb-page.png](doc%2Ffb-page.png)
+
+
 ## Dependencies
 
 - Axios

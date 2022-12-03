@@ -37,6 +37,10 @@ export default function useApplicationData() {
   const setFbLoadingState = useSetRecoilState(loadingStateFb);
   const setInsLoadingState = useSetRecoilState(loadingStateIns);
 
+  const twitterLoginCookie = getCookie("twitterAccessToken");
+  const fbLoginCookie = getCookie("fbAccessToken");
+  const insLoginCookie = getCookie("insAccessToken");
+
   const fetchTwitterSearchResult = (searchString) => {
     setTwitterLoadingState(true);
     console.log("fetchTwitter");
@@ -67,9 +71,10 @@ export default function useApplicationData() {
   };
 
   useEffect(() => {
-    const twitterLoginCookie = getCookie("twitterAccessToken");
-    if (twitterLoginCookie) {
+    if (!twitterLogin && twitterLoginCookie) {
       setTwitterLogin(true);
+    }
+    const fetchTwitterData = () => {
       setTwitterLoadingState(true);
       axios.get("/api/Twitter/GetContent").then((response) => {
         console.log("useTwitterEffect");
@@ -81,16 +86,19 @@ export default function useApplicationData() {
         });
       });
       setTwitterLoadingState(false);
-    }
+    };
+    if (!twitterLogin) return;
+    fetchTwitterData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [twitterLogin]);
 
   useEffect(() => {
-    const fbLoginCookie = getCookie("fbAccessToken");
-    if (fbLoginCookie || fbLogin) {
+    if (!fbLogin && fbLoginCookie) {
       setFbLogin(true);
+    }
+    const fetchFBData = () => {
+      setFbLoadingState(true);
       axios.get("/api/Facebook/GetContent").then((response) => {
-        setFbLoadingState(true);
         const finalData = getFbTimeline(response.data.data);
         console.log("FBFB");
         dispatch({
@@ -99,14 +107,16 @@ export default function useApplicationData() {
         });
         setFbLoadingState(false);
       });
-    }
+    };
+    if (!fbLogin) return;
+    fetchFBData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fbLogin]);
   useEffect(() => {
-    const insLoginCookie = getCookie("insAccessToken");
-    if (insLoginCookie) {
+    if (!insLogin && insLoginCookie) {
       setInsLogin(true);
-
+    }
+    const fetchInsData = () => {
       setInsLoadingState(true);
       axios.get("/api/Instagram/GetContent").then((response) => {
         const finalData = getInsTimeline(response.data);
@@ -117,7 +127,10 @@ export default function useApplicationData() {
         });
       });
       setInsLoadingState(false);
-    }
+    };
+    if (!insLogin) return;
+    fetchInsData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [insLogin]);
 

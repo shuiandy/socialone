@@ -24,7 +24,7 @@
     "react-pro-sidebar": "^1.0.0-alpha.7",
     "react-reveal": "^1.2.2",
     "recoil": "^0.7.6",
-    "sass": "^1.55.0",
+    "sass": "^1.89.2",
     "twitter-api-v2": "^1.12.9"
   },
   "devDependencies": {
